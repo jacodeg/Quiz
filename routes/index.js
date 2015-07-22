@@ -9,6 +9,8 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Quiz' });
 });
 
+// Autoload de comandos con :quizId
+router.param('quizId', quizController.load);  // autoload :quizId
 
 //Registrar las nuevas rutas en el enrutador.
 // Definición de rutas de /quizes
