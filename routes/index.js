@@ -14,6 +14,7 @@ router.param('quizId', quizController.load);  // autoload :quizId
 
 //Registrar las nuevas rutas en el enrutador.
 // Definición de rutas de /quizes
+//GET /quizes?search=texto_a_buscar
 router.get('/quizes',                      quizController.index);
 router.get('/quizes/:quizId(\\d+)',        quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
