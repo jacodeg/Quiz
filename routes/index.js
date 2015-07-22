@@ -11,10 +11,10 @@ router.get('/', function(req, res) {
 
 
 //Registrar las nuevas rutas en el enrutador.
-/*GET /quizes/question */
-router.get('/quizes/question', quizController.question);
-/*GET /quizes/answer */
-router.get('/quizes/answer'  , quizController.answer);
+// Definición de rutas de /quizes
+router.get('/quizes',                      quizController.index);
+router.get('/quizes/:quizId(\\d+)',        quizController.show);
+router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
 
 
 //Registrar la ruta de créditos
