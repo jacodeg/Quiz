@@ -18,7 +18,8 @@ exports.load = function(req, res, next, quizId) {
 exports.index = function(req, res){
 
   if(!req.query.search){    // GET /quizes
-    models.Quiz.findAll().then(function(quizes){
+    var condicion = {order : "pregunta ASC"};
+    models.Quiz.findAll(condicion).then(function(quizes){
       res.render('quizes/index', {quizes: quizes});
     }).catch(function(error) { next(error);})
 
@@ -33,8 +34,19 @@ exports.index = function(req, res){
     //que renderiza el resultado del a búsqueda, es decir, renderiza el
     //el array devuelto. En caso de ocurrir un error, se captura con .catch()
     // y ejecuta el callback encargado de gestionar el error.
-    models.Quiz.findAll({
-      where: ["pregunta like ?", search]})
+    //http://docs.sequelizejs.com/en/latest/docs/querying/#operators
+    //NOTA en las ref. dice que el operador se escribe con $like, sin embargo
+    //me dar un error "Possibly unhandled ReferenceError: next is not defined"
+    //cuando intenta construir la consulta sql. Sin $, funciona correctamente
+    //Y me construye la URL
+    var condicion= { where : { pregunta: {
+                      like: search
+                      }} ,
+                  order : 'pregunta'};
+
+    //var condicion = { where: ['pregunta LIKE ?', search],
+                // order : 'pregunta ASC'};
+    models.Quiz.findAll(condicion)
         .then(function(quizes){
             res.render('quizes/index', {quizes: quizes});
           }).catch(function(error) { next(error);})
