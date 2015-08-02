@@ -54,7 +54,8 @@ if (app.get('env') === 'development') {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error: err // print err
+            error: err, // print err
+            errors: []
         });
     });
 }
@@ -66,7 +67,8 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
-        error: {}  //don't print err (empty object)
+        error: {},  //don't print err (empty object)
+        errors: []
     });
 });
 
