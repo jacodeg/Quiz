@@ -94,7 +94,7 @@ exports.create = function(req, res) {
         .then( function(){ res.redirect('/quizes')})  // res.redirect: Redirección HTTP a lista de preguntas
       }
     }
-  );
+  ).catch(function(error){next(error)});
 };
 
 
@@ -109,11 +109,7 @@ exports.edit = function(req, res) {
 exports.update = function(req, res) {
   req.quiz.pregunta  = req.body.quiz.pregunta;
   req.quiz.respuesta = req.body.quiz.respuesta;
-<<<<<<< HEAD
-  console.log ('export.update => Quiz[pregunta]=' + quiz.pregunta + 'Quiz[respuesta]=' + quiz.respuesta);
-=======
   console.log ('export.update => Quiz[pregunta]=' + req.quiz.pregunta + 'Quiz[respuesta]=' + req.quiz.respuesta);
->>>>>>> Editar Preguntas
   req.quiz
   .validate()
   .then(
@@ -126,5 +122,13 @@ exports.update = function(req, res) {
         .then( function(){ res.redirect('/quizes');});
       }     // Redirección HTTP a lista de preguntas (URL relativo)
     }
-  );
+  ).catch(function(error){next(error)});
+};
+
+
+// DELETE /quizes/:id
+exports.destroy = function(req, res) {
+  req.quiz.destroy().then( function() {
+    res.redirect('/quizes');
+  }).catch(function(error){next(error)});
 };
