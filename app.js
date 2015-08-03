@@ -6,6 +6,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials'); //importar la factoria express-partials
+var methodOverride = require('method-override');
+
 
 //---- [2] IMPORTAR ENRUTADORES
 var routes = require('./routes/index');
@@ -15,7 +17,7 @@ var routes = require('./routes/index');
 var app = express();
 
 
-//---- [4] INSTALAR/CONFITURAR EL GENARADOR DE VISTAS.
+//---- [4] INSTALAR/CONFIGURAR EL GENARADOR DE VISTAS.
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -28,6 +30,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());  //---[6] INSTALAR MIDDLEWARES
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
+app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //----[7]  INSTALAR ENRUTADORES: Asociar rutas a sus gestores.
