@@ -109,7 +109,11 @@ exports.edit = function(req, res) {
 exports.update = function(req, res) {
   req.quiz.pregunta  = req.body.quiz.pregunta;
   req.quiz.respuesta = req.body.quiz.respuesta;
+<<<<<<< HEAD
   console.log ('export.update => Quiz[pregunta]=' + quiz.pregunta + 'Quiz[respuesta]=' + quiz.respuesta);
+=======
+  console.log ('export.update => Quiz[pregunta]=' + req.quiz.pregunta + 'Quiz[respuesta]=' + req.quiz.respuesta);
+>>>>>>> Editar Preguntas
   req.quiz
   .validate()
   .then(
