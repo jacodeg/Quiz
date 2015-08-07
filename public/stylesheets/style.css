@@ -17,3 +17,5 @@
   span#tema           { font: 8px Georgia, serif; }
 
   table#listaquiz     { text-align: left;}
+
+  .right {float: right;}  
