@@ -60,7 +60,7 @@ app.use(function(req, res, next) {
       }else{
         //Si el usuario está inactivo, y pasan los dos minutos, no llegará
         //aquí
-        req.session.startTime = lastTime.
+        req.session.startTime = lastTime;
       }
   }
   next();
