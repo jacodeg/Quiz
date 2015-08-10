@@ -34,6 +34,14 @@ exports.create = function(req, res) {
         // Crear req.session.user y guardar campos   id  y  username
         // La sesión se define por la existencia de:    req.session.user
         req.session.user = {id:user.id, username:user.username};
+        //En la respuesta va una cookie con la hora de expiración de la sesión
+
+        // Crea req.session.startTime para guardar la hora del reloj del sistema
+        // en el momento que se realizó el login para el sistema en autologout
+        req.session.startTime = new Date().getTime();
+        req.session.autoLogout= false; //para mostrar mensaje alert desconexion +2 min.
+        console.log("startTime  :" + req.session.startTime.toString());
+        console.log("autoLogout :" + req.session.autoLogout.toString());
 
         res.redirect(req.session.redir.toString());// redirección a path anterior a login
     });
@@ -41,6 +49,10 @@ exports.create = function(req, res) {
 
 // DELETE /logout   -- Destruir sesion
 exports.destroy = function(req, res) {
-    delete req.session.user;
-    res.redirect(req.session.redir.toString()); // redirect a path anterior a login
+  delete req.session.user;
+  if (req.session.autoLogout){//si el valor paso a true en app.js
+    res.redirect("/login");//redireccionamos y mostramos mensaje de alert desconexion +2 min.
+  }else{
+    res.redirect(req.session.redir.toString());// redirect a path anterior a login
+  }
 };

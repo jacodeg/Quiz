@@ -45,13 +45,26 @@ app.use(function(req, res, next) {
 
   // Hacer visible req.session en las vistas
   res.locals.session = req.session;
+
+  //Controlamos si se ha sobrepasado el tiempo de sesión de 2 minutos
+  if (req.session.startTime ){
+      console.log("Comprobamos tiempo de sesión");
+      var lastTime = new Date().getTime();
+      console.log("lasTime: " + lastTime.toString());
+      var intervalo = lastTime - req.session.startTime;
+      console.log("intervalo: " + intervalo.toString() );
+      if ( intervalo > (2 * 60 * 1000) ) {
+         delete req.session.startTime;
+         req.session.autoLogout = true;
+         res.redirect("/logout");
+      }
+  }
   next();
 });
 
 //----[7]  INSTALAR ENRUTADORES: Asociar rutas a sus gestores.
 //----[7.1]
 app.use('/', routes);
-
 
 //----[7.2] resto de rutas: genera error 404 de HTTP
 // catch 404 and forward to error handler
