@@ -57,6 +57,10 @@ app.use(function(req, res, next) {
          delete req.session.startTime;
          req.session.autoLogout = true;
          res.redirect("/logout");
+      }else{
+        //Si el usuario está inactivo, y pasan los dos minutos, no llegará
+        //aquí
+        req.session.startTime = lastTime.
       }
   }
   next();
